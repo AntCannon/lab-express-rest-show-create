@@ -1,6 +1,6 @@
 const express = require('express')
 const logsController = express.Router()
-const logModel = require('../models/log')
+let logModel = require('../models/log')
 
 // index
 logsController.get('/', (req, res) => {
@@ -16,6 +16,16 @@ logsController.get('/:id', (req, res) => {
   } else {
       res.redirect("*")
   }
+})
+
+// create
+logsController.post('/', (req, res) => {
+  const createdLog = {
+    id: logModel.length + 1,
+    ...req.body
+  }
+  logModel.push(createdLog)
+  res.status(201).json(createdLog)
 })
 
 module.exports = logsController

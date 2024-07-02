@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 
+// middleware
+app.use(express.json())
+
 // controllers
 const logsController = require('./controllers/logsController')
 
