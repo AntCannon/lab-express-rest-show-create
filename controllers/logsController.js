@@ -25,7 +25,19 @@ logsController.post('/', (req, res) => {
     ...req.body
   }
   logModel.push(createdLog)
-  res.status(201).json(createdLog)
+  res.status(201).json(logModel[logModel.length - 1])
+})
+
+// destroy
+logsController.delete('/:id', (req, res) => {
+  const id = +req.params.id
+  const logIndexToDelete = logModel.findIndex(log => log.id === id)
+  if (logIndexToDelete > -1) {
+    logModel.splice(logIndexToDelete, 1)
+    res.status(200).redirect("/logs")
+  } else {
+    res.json({error: `Log with id: ${id} not found`})
+  }
 })
 
 module.exports = logsController
